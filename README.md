@@ -7,7 +7,7 @@ by default all call on http service is executed on gorutine
 
 ## Development server
 
-Run `go run golangBack` for a dev server. Navigate to `http://localhost:8001/`.
+Run `go run main.go` for a dev server. Navigate to `http://localhost:8001/`.
 
 ## Routes
 post transaction
