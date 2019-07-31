@@ -15,16 +15,19 @@ var (
 
 func readAllTransaction(responseWriter http.ResponseWriter, request *http.Request) {
 	responseWriter.Header().Set("Content-Type", "application/json")
+	responseWriter.Header().Set("Access-Control-Allow-Origin", "*")
 	_ = json.NewEncoder(responseWriter).Encode(mockRepository.GetAllTransaction())
 }
 
 func getBalanace(responseWriter http.ResponseWriter, request *http.Request) {
 	responseWriter.Header().Set("Content-Type", "application/json")
+	responseWriter.Header().Set("Access-Control-Allow-Origin", "*")
 	_ = json.NewEncoder(responseWriter).Encode(mockRepository.GetBalance())
 }
 
 func transactionWriterHandler(responseWriter http.ResponseWriter, request *http.Request) {
 	var transaction repository.Transaction
+	responseWriter.Header().Set("Access-Control-Allow-Origin", "*")
 	err := json.NewDecoder(request.Body).Decode(&transaction)
 	if err != nil {
 		fmt.Print("error with json decoding : ", err)
@@ -40,6 +43,7 @@ func transactionWriterHandler(responseWriter http.ResponseWriter, request *http.
 
 func transactionReaderHandler(responseWriter http.ResponseWriter, request *http.Request) {
 	id := strings.TrimPrefix(request.URL.Path, "/transaction/")
+	responseWriter.Header().Set("Access-Control-Allow-Origin", "*")
 	fmt.Println("getting transaction with Id : " + id)
 	transaction, err := mockRepository.GetTransactionById(id)
 	if err != nil {

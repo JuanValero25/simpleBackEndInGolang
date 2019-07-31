@@ -27,6 +27,8 @@ http://localhost:8001/
 
 Run `go build -ldflags="-s -w"` to build the project withOut debugin. 
 
+## UX/UI
+go to angular/agile-engine-ui and see the README.md
 
 ## Further help
 
