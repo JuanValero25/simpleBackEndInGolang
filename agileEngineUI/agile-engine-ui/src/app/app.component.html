@@ -1,0 +1,35 @@
+<div align="center">
+  <button (click)=getAllTransaction() color="primary" mat-raised-button>refresh</button>
+</div>
+<table [dataSource]="allTransaction"
+       class="mat-elevation-z8" mat-table
+       multiTemplateDataRows>
+  <ng-container *ngFor="let column of columnsToDisplay" matColumnDef="{{column}}">
+    <th *matHeaderCellDef mat-header-cell> {{column}} </th>
+    <td  [ngClass]="{'color-type-red': element['type'] === 'debit', 'color-type-green': element['type'] === 'credit'}"  *matCellDef="let element" mat-cell> {{element[column]}} </td>
+  </ng-container>
+
+  <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+  <ng-container matColumnDef="expandedDetail">
+    <td *matCellDef="let element" [attr.colspan]="columnsToDisplay.length" mat-cell>
+      <div [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'"
+           class="example-element-detail">
+        <br>
+        <div class="example-element-description"> {{element.type}} </div>
+        <div class="example-element-description"> {{element.amount}} </div>
+        <div class="example-element-description">{{element.effectiveDate}}</div>
+        <div class="example-element-description">{{element.id}}</div>
+      </div>
+    </td>
+  </ng-container>
+
+  <tr *matHeaderRowDef="columnsToDisplay" mat-header-row></tr>
+  <tr (click)="expandedElement = expandedElement === element ? null : element" *matRowDef="let element; columns: columnsToDisplay;"
+      [class.example-expanded-row]="expandedElement === element"
+      class="example-element-row"
+      mat-row>
+  </tr>
+  <tr *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row" mat-row></tr>
+</table>
+
+<router-outlet></router-outlet>
